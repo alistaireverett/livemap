@@ -43,7 +43,7 @@ function initialize() {
 
   //Setup heat map and link to Twitter array we will append data to
   //var heatmap;
-  //var liveTweets = new google.maps.MVCArray();
+  var liveTweets = new google.maps.MVCArray();
   //heatmap = new google.maps.visualization.HeatmapLayer({
   //  data: liveTweets,
   //  radius: 25
