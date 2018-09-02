@@ -1,9 +1,11 @@
 
 # README
 
-![alt text](docs/demo.jpg "LiveMapDemo")
+![LiveMapDemo](docs/demo.jpg "LiveMapDemo")
 
 LiveMap is a node.js application designed to allow a satellite phone to reproduce the behaviour of an InReach or Spot device, avoiding the need for an additional device/subscription costs or the additional weight and power requirements in remote field locations.
+
+**[Check out a running demo](https://demolivemap.herokuapp.com/)**
 
 The app can be deployed on a cloud server (tested working on AWS EC2 and using heroku), and once running it's as simple as sending a text message using a predefined syntax. The message will be parsed and posted on an online map (currently using google maps) which can be viewed directly or embedded in a website. The map is customisable with user defined map icons which can be selected using a letter code in each message.
 
@@ -39,7 +41,7 @@ The message components are split by a "\*" (a character which is easy to type on
 
 A\*74.452\*2.3455\*This message will appear at the location specified and tells everyone what an awesome time we've had.
 
-Check out a running demo version here:
+Check out a running demo version [here](https://demolivemap.herokuapp.com/).
 
 ### Try it:
 
@@ -55,4 +57,4 @@ All members of the Stauning Alps Expedition, who contributed to code development
 
 All of the sponsors and providers of grants to the expedition (full list [here]()).
 
-(This blog)[https://blog.safe.com/2014/03/twitter-stream-api-map/] and associated code provided the starting point for LiveMap and without it things would have been very difficult!
+[This blog](https://blog.safe.com/2014/03/twitter-stream-api-map/) and associated code provided the starting point for LiveMap and without it things would have been very difficult!
