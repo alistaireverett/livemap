@@ -2,6 +2,7 @@
   "name": "live-map",
   "version": "0.0.1",
   "author": "alistaireverett",
+  "license" : "GPL-3.0-or-later",
   "private": true,
   "scripts": {
     "start": "node app"
