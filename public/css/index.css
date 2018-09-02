@@ -69,7 +69,7 @@
 body {
   -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
   font-family: verdana;
-  padding-top: 40px;
+  /*padding-top: 40px;*/
 }
 
 .brand{
@@ -90,7 +90,7 @@ body {
 }
 
 .navbar-inner {
-  background-color: #7AB800;
+  background-color: #ffffff;
   background-image: none;
 }
 

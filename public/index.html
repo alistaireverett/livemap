@@ -5,7 +5,7 @@
 	<!-- Safe Software, 2013 -->
 	<!-- http://www.safe.com -->
 
-	<title>Twitter Streaming Using Node</title>
+	<title>Livemap - Demo</title>
 	<script src="../socket.io/socket.io.js"></script>
 	<!-- JQuery -->
 	<script src="/libs/jquery-1.10.1.js"></script>
@@ -19,7 +19,8 @@
 
 	<!-- Google Maps -->
 	<link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQvbZTQNLAYFj7nLz6P_ClG7zpp5wMmo&sensor=false&libraries=visualization"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbQvbZTQNLAYFj7nLz6P_ClG7zpp5wMmo&libraries=visualization"></script>
+  <script src="js/markerclusterer.js"></script>
 
 	<!-- Generic -->
 	<link rel="stylesheet" href="css/index.css">
@@ -32,30 +33,9 @@
 </head>
 
 <body onload="initialize()">
-
-	<div class="navbar navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-
-				<div class="nav-collapse collapse">
-					<a href="https://github.com/safesoftware/twitter-streaming-nodejs" class="btn">
-						<img src="libs/github-logo.png"> Fork GitHub
-					</a>
-					<a href="https://github.com/safesoftware/twitter-streaming-nodejs/archive/master.zip" class="btn">
-						<i class="icon-download-alt"></i> Download Zip
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="container">
 		<div id="map_canvas"></div>
 	</div>
+	<div>Icons designed by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">Flaticon</a> licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 </body>
 </html>

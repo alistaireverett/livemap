@@ -1,11 +1,65 @@
 function initialize() {
   //Setup Google Map
-  var myLatlng = new google.maps.LatLng(17.7850,-12.4183);
-  var light_grey_style = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
+  var centreLatLng = new google.maps.LatLng(54,0);
+  var light_grey_style = [
+    {
+      "featureType": "landscape",
+      "stylers": [
+        {"saturation":-100},
+        {"lightness":65},
+        {"visibility":"on"}
+      ]
+    },
+    {
+      "featureType": "poi",
+      "stylers": [
+        {"saturation":-100},
+        {"lightness":51},
+        {"visibility":"hidden"}
+      ]
+    },
+    {
+      "featureType": "road",
+      "stylers": [
+        {"saturation":-100},
+
+        {"visibility":"on"}
+      ]
+    },
+    {
+      "featureType":"transit",
+      "stylers": [
+        {"saturation":-100},
+        {"visibility":"simplified"}
+      ]
+    },
+    {
+      "featureType":"administrative.province",
+      "stylers": [ {"visibility":"off"} ]
+    },
+    {
+      "featureType":"water",
+      "elementType":"labels",
+      "stylers": [
+        {"visibility":"on"},
+        {"lightness":-25},
+        {"saturation":-100}
+      ]
+    },
+    {
+      "featureType":"water",
+      "elementType":"geometry",
+      "stylers": [
+        {"hue":"#ffff00"},
+        {"lightness":-25},
+        {"saturation":-97}
+      ]
+    }
+  ];
   var myOptions = {
     zoom: 2,
-    center: myLatlng,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: centreLatLng,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
     mapTypeControl: true,
     mapTypeControlOptions: {
       style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -14,81 +68,66 @@ function initialize() {
     styles: light_grey_style
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-  //test marker
-  // label
-  var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">DATE</h1>'+
-            '<div id="bodyContent">'+
-            "<p> This is where we've got to! </p>"+
-            '</div>'+
-            '</div>';
-
-  var myLatLng = {lat: -25.363, lng: 131.044};
-  var markera = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    title: "We're here!"
-  });
-
-  var infowindow = new google.maps.InfoWindow({
-          content: contentString
-  });
-
-  markera.addListener('click', function() {
-          infowindow.open(map, markera);
-  });
-
-  //Setup heat map and link to Twitter array we will append data to
-  var heatmap;
-  var liveTweets = new google.maps.MVCArray();
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: liveTweets,
-    radius: 25
-  });
-  heatmap.setMap(map);
+  var prev_infowindow = false;
 
   if(io !== undefined) {
     // Storage for WebSocket connections
     var socket = io.connect('/');
 
-    // This listens on the "twitter-steam" channel and data is
-    // received everytime a new tweet is receieved.
-    socket.on('twitter-stream', function (data) {
+    socket.on('twitter-rest', function (data) {
+      var markers = [];
+      var infowindows = [];
 
-      //Add tweet to the heat map array.
-      var tweetLocation = new google.maps.LatLng(data.lng,data.lat);
-      liveTweets.push(tweetLocation);
+      // loop through tweets
+      for (i = 0; i < data.length; i++) {
+        // template for marker text
+        var contentString = '<div id="content">'+
+                  '<div id="siteNotice">'+
+                  '</div>'+
+                  '<h3 id="firstHeading" class="firstHeading">' + data[i].date + '</h3>'+
+                  '<div id="bodyContent">'+
+                  '<p>'+ data[i].notes +'</p>'+
+                  '</div>'+
+                  '</div>';
 
-      // var contentString = "something";//data.txt;
-      //
-      // var myLatLng = {lat: -20.363, lng: 135.044};
-      // var markerb = new google.maps.Marker({
-      //   position: myLatLng,
-      //   map: map,
-      //   title: "We're here!"
-      // });
-      //
-      // var infowindow = new google.maps.InfoWindow({
-      //         content: contentString
-      // });
-      //
-      // markerb.addListener('click', function() {
-      //         infowindow.open(map, markerb);
-      // });
-      //Flash a dot onto the map quickly
-      var image = "css/small-dot-icon.png";
-      var markerc = new google.maps.Marker({
-        position: tweetLocation,
-        map: map,
-        icon: image
-      });
-      setTimeout(function(){
-        markerc.setMap(null);
-      },600);
+        // marker location
+        var markerLatLng = {
+          lat: Number(data[i].lat),
+          lng: Number(data[i].lon)
+        };
 
+        markers[i] = new google.maps.Marker({
+          position: markerLatLng,
+          map: map,
+          title: data[i].date,
+          icon: {
+            url: data[i].icon,
+            size: new google.maps.Size(40, 40),
+            origin: new google.maps.Point(5, 5),
+            anchor: new google.maps.Point(10, 10),
+            scaledSize: new google.maps.Size(35, 35)
+          },
+        });
+        markers[i].index = i;
+        infowindows[i] = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 210
+        });
+
+        // closes previous infowindow when next infowindow is opened
+        markers[i].addListener('click', function() {
+          if( prev_infowindow ) {
+            prev_infowindow.close();
+          }
+          infowindows[this.index].open(map, markers[this.index]);
+          prev_infowindow = infowindows[this.index];
+        });
+
+      }
+
+      // add marker clustering to tidy things up
+      var markerCluster = new MarkerClusterer(map, markers,
+              {imagePath: 'images/m'});
     });
 
     // Listens for a success response from the server to
