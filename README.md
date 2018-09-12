@@ -53,8 +53,8 @@ The demo map above is linked to @DemoLiveMap on twitter; send a DM to the accoun
 
 ### Thanks to...
 
-All members of the Stauning Alps Expedition, who contributed to code development and the interface/icon display on the maps, as well as to an excellent and successful expedition which you can read more about in our (report)[].
+All members of the Stauning Alps Expedition (Molly Thompson, Jesse Dufton, Oliver Mentz, Jen Roberts and Alistair Everett), who contributed to code development and/or the design of the interface/icon display on the maps, as well as to an excellent and successful expedition which you can read more about in our [report](https://alistaireverett.github.io/assets/extras/FullExpedReport.pdf) and [website/blog](http://www.olivermentz.com/Greenland2017/blog/).
 
-All of the sponsors and providers of grants to the expedition (full list [here]()).
+All of the sponsors and providers of grants to the expedition (full list [here](http://www.olivermentz.com/Greenland2017/sponsors/)).
 
 [This blog](https://blog.safe.com/2014/03/twitter-stream-api-map/) and associated code provided the starting point for LiveMap and without it things would have been very difficult!
